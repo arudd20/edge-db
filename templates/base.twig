@@ -12,11 +12,11 @@
 		<a class="skip-link screen-reader-text" href="#content">{{ _e( 'Skip to content') }}</a>
 		
 		<div>
-			<div class="top-nav-parent p-3">
+			<div class="top-nav-parent">
 				<div id="top-nav" class="edge-wrapper flex justify-end gap-4">
 					{% for items in {'items': menuTopNav.get_items} %}
 						{% for item in items %}
-								<a class="py-2 px-4 diag">
+								<a class="py-2 px-4">
 									<div class="text-xs uppercase">{{item}}</div>
 								</a>
 						{% endfor %}

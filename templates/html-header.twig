@@ -171,11 +171,17 @@
 
 		#top-nav, .top-nav-parent {
 			background-color: #6E0708;
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+		#top-nav {
+			width; 90%;
 		}
 
         #top-nav > a {
             background-color: #fff;
             cursor: pointer;
+			transform: skewX(-10deg) skewY(0deg);
         }
 
          #top-nav > a:hover {
@@ -238,6 +244,11 @@
 				max-width: 375px;
 			}
 		}
+		@media only screen and (max-width: 980px) {
+			.header .edge-bg-lite {
+				background-color: transparent;
+			}
+		}
 		@media only screen and (max-width: 485px) {
 			.header > .wrapper > .desktop {
 				display: none;
@@ -262,6 +273,7 @@
 		@media only screen and (min-width: 750px) {
 			.top-nav-parent {
 				display: grid;
+				justify-content: end;
 			}
 		}
 	}
