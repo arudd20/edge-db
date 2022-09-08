@@ -1,0 +1,66 @@
+<script>
+    function ObjectData(){
+        this.date_approved = '2022-02-16';
+
+        this.company_name = 'Temp Name';
+        this.url = '';
+
+        this.total_jobs = 0;
+        this.projected_investment = 0;
+
+        this.projected_spending = 0;
+        this.benefit_cost_ratio = 0;
+
+        this.tif_amount = 0;
+
+        this.loan_type = 'Temp String';
+        this.loan_amount = 0;
+
+        this.bond_amount = 0;
+
+        this.financing_amount = 0;
+        this.value_of_shipments = 0;
+        this.NEED_grants = 0;
+    }
+
+    function Scorecard(){
+        this.list_breakers = [2, 10, 12]; // Starts counting with the first line as line 0
+
+        this.total_jobs = {text: 'Total Jobs', value: 0, value_type:'int'};
+        this.total_capital_investment = {text: 'Total Capital Investment', value: 0, value_type:'currency'};
+
+        this.num_of_pilots_approved = {text: 'Number of Pilots Approved', value: 0, value_type:'int'};
+        this.target_spending = {text: 'MWBE/LOSB Target Spending*', value: 0, value_type:'currency'};
+        this.avg_pilot_wage = {text: 'Average Wage (Pilots Only)', value: 0, value_type:'currency'};
+        this.avg_pilot_term = {text: 'Average Pilot Term', value: 0, value_type:'years'};
+        this.local_tax_rev = {text: 'Local Tax Revenues Generated', value: 0, value_type:'currency'};
+        this.tax_abated = {text: 'Total Tax Abated', value: 0, value_type:'currency'};
+        this.benefit_cost_ratio = {text: 'Benefit to Cost Ratio', value: 0, value_type:'double'};
+        this.incentive_amt = {text: 'Incentive Amount Per Job Per Year', value: 0, value_type:'currency'};
+
+        this.num_tifs_approved = {text: 'Number of TIFS Approved', value: 0, value_type:'int'};
+
+        this.num_loans_approved = {text: 'Number of Loans Approved', value: 0, value_type:'currency'};
+        this.total_loan_amt = {text: 'Total Loan Amount', value: 0, value_type:'currency'};
+        this.num_bonds_approved = {text: 'Number of Bonds Approved', value: 0, value_type:'int'};
+        this.total_bond_amt = {text: 'Total Bond Amount', value: 0, value_type:'currency'};
+        this.num_others_approved = {text: 'Number of Others Approved', value: 0, value_type:'int'};
+
+        this.full_list = [
+            this.total_jobs, this.total_capital_investment, this.num_of_pilots_approved,
+            this.target_spending, this.avg_pilot_wage, this.avg_pilot_term, this.local_tax_rev,
+            this.tax_abated, this.benefit_cost_ratio, this.incentive_amt, this.num_tifs_approved,
+            this.num_loans_approved, this.total_loan_amt, this.num_bonds_approved, this.total_bond_amt,
+            this.num_others_approved
+        ];
+    }
+
+    function sortByDate(array){
+        array.sort(function(a, b){
+            return new Date(a.date_approved) - new Date(b.date_approved);
+        });
+
+        return array;
+    }
+    
+</script>

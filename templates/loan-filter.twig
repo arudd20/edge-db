@@ -1,0 +1,492 @@
+<style>
+    select, .zip { margin-bottom: 1rem; }
+
+    .material-icons.md-18 {
+        font-size: 1.25rem;
+        max-width: max-content;
+    }
+
+    #filter-tab {
+        position: absolute;
+        top: 580px;
+        right: 20px;
+        z-index: 200;
+    }
+    #filter-tab-inner {
+        cursor: pointer;
+    }
+    #filter-tab-inner > * {
+        transform: skewX(11deg);
+    }
+    #filter-selection-list {
+        position: absolute;
+        top: 600px;
+        max-height: 82vh;
+        right: -300px;
+        background-color: #ccc;
+        width: 300px;
+        z-index: 100;
+        overflow-y: auto;
+        padding: .5rem;
+    }
+    .title {
+        border-bottom: 1px solid #BF021C;
+        margin-bottom: .5rem;
+    }
+</style>
+
+<div id="filter-tab">
+    <div id="filter-tab-inner" class="text-sm text-white edge-btn-red diag flex items-center justify-around max-w-max py-2 px-4">
+        <div>
+            Filters
+        </div>
+        <span class="material-icons ml-4 md-18">
+            arrow_right
+        </span>
+    </div>
+</div>
+
+<div id="filter-selection-list" class="mt-4 flex flex-col gap-2">
+    <div id="date-approved" class="">
+        <div class="title flex justify-between items-center">
+            <div>Date Approved</div>
+        </div>
+        <select id="date-approved-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+        </select>
+    </div>
+
+    <div id="date-closed" class="">
+        <div class="title flex justify-between items-center">
+            <div>Date Closed</div>
+        </div>
+        <select id="date-closed-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+        </select>
+    </div>
+
+    <div id="loan-type" class="">
+        <div class="title flex justify-between items-center">
+            <div>Loan Type</div>
+        </div>
+        <div class="w-full">
+            <select id="loan-type-selection" class="w-11/12 mx-auto">
+                <option value="">Select Option</option>
+                <option value="Inner City Economic Development Loan">Inner City Economic Development Loan</option>
+                <option value="EDGE Loan Fund Loan">EDGE Loan Fund Loan</option>
+                <option value="SBA 504 Loan">SBA 504 Loan</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="retained-jobs" class="">
+        <div class="title flex justify-between items-center">
+            <div>Retained Jobs</div>
+        </div>
+        <select id="retained-jobs-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="1">0-25</option>
+            <option value="2">25-100</option>
+            <option value="3">100+</option>
+        </select>
+    </div>
+
+    <div id="new-jobs" class="">
+        <div class="title flex justify-between items-center">
+            <div>New Jobs</div>
+        </div>
+        <select id="new-jobs-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="1">0-25</option>
+            <option value="2">25-100</option>
+            <option value="3">100+</option>
+        </select>
+    </div>
+
+    <div id="county-district" class="">
+        <div class="title flex justify-between items-center">
+            <div>County Commission District</div>
+        </div>
+        <select id="county-district-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+        </select>
+    </div>
+
+    <div id="city-district" class="">
+        <div class="title flex justify-between items-center">
+            <div>City Council District</div>
+        </div>
+        <select id="city-district-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+    </div>
+
+    <div id="loan-amount" class="">
+        <div class="title flex justify-between items-center">
+            <div>Loan Amount</div>
+        </div>
+        <select id="loan-amount-selection" class="w-11/12 mx-auto">
+            <option value="">Select Option</option>
+            <option value="1">Up to $1 MIL</option>
+            <option value="2">$1 MIL - $10 MIL</option>
+            <option value="3">$10 MIL - $30 MIL</option>
+            <option value="4">$30 MIL - $75 MIL</option>
+            <option value="5">$75 MIL +</option>
+        </select>
+    </div>
+
+    <div id="zipcode" class="">
+        <div class="title flex justify-between items-center">
+            <div>Zip Code</div>
+        </div>
+        <input id="zipcode-input" type="text" class="w-11/12 mx-auto p-2 zip" placeholder="54545">
+    </div>
+
+</div>
+
+<script>
+loans.sort((a, b) => {
+    const a_year = new Date(a.DateApproved.substring(0, 10)).getFullYear();
+    const b_year = new Date(b.DateApproved.substring(0, 10)).getFullYear();
+
+    if (a_year < b_year) {
+        return -1;
+    } else if (a_year > b_year) {
+        return 1;
+    } else {
+        return 0;
+    }
+});
+
+loans.reverse();
+
+var base_html = `<div id="loan_list">
+    <div class="edge-bg-dark">
+        <div class="edge-wrapper grid grid-cols-12 gap-6 text-white">
+            <div class="col-span-3">Date Approved</div>
+            <div class="col-span-4">Company Name</div>
+            <div class="col-span-3">Loan Type</div>
+            <div class="col-span-2">Projected Investment</div>
+        </div>
+    </div>`;
+
+function Filters(){
+    this.date_approved;
+    this.date_closed;
+    this.loan_type;
+    this.retained_jobs;
+    this.new_jobs;
+    this.county_district;
+    this.city_district;
+    this.loan_amount;
+    this.zipcode;
+}
+
+var filter_util = new Filters();
+var html = base_html;
+
+function getFilters(){
+    filter_util.date_approved = $('#date-approved-selection').val();
+    filter_util.date_closed = $('#date-closed-selection').val();
+    filter_util.loan_type = $('#loan-type-selection').val();
+    filter_util.retained_jobs = $('#retained-jobs-selection').val();
+    filter_util.new_jobs = $('#new-jobs-selection').val();
+    filter_util.county_district = $('#county-district-selection').val();
+    filter_util.city_district = $('#city-district-selection').val();
+    filter_util.loan_amount = $('#loan-amount-selection').val();
+    filter_util.zipcode = $('#zipcode-input').val();
+}
+
+function sortLoanList(){
+    html = base_html;
+    getFilters();
+
+    console.log(filter_util);
+
+    for (p of loans){
+        const DateApproved = checkLoanDateApproved(p);
+        if (!DateApproved) { continue; }
+        if (!checkLoanDateClosed(p)){ continue; }
+        if (!checkLoanType(p)) { continue; }
+        if (!checkRetainedJobs(p)) { continue; }
+        if (!checkNewJobs(p)) { continue; }
+        if (!checkCountyDistrict(p)) { continue; }
+        if (!checkCityDistrict(p)) { continue; }
+        if (!checkLoanAmount(p)) { continue; }
+        if (!checkZipcode(p)) { continue; }
+
+        html += `
+        <div class="">
+            <div class="edge-wrapper grid grid-cols-12 gap-6 row-b1">
+                <div class="col-span-3">${DateApproved}</div>
+                <div class="col-span-4 edge-link-gray">
+                    <a class="edge-link-red" href="${URL + p.Id}">
+                        ${p.CompanyName}
+                    </a>
+                </div>
+                <div class="col-span-3">${p.LoanType}</div>
+                <div class="col-span-2">${formatter.format(parseInt(p.LoanAmount))}</div>
+            </div>
+        </div>`;
+    }
+
+    if (html == base_html){
+        html += `<div class="edge-wrapper mt-8">No Results Found</div>`;
+    }
+    
+    html += '</div>';
+    document.getElementById('edge_loans').innerHTML = html;
+}
+
+function checkLoanDateApproved(_p){
+    const year = new Date(_p.DateApproved.substring(0, 10)).getFullYear();
+
+    if (year == filter_util.date_approved || filter_util.date_approved == ""){
+        const day = new Date(_p.DateApproved.substring(0, 10)).getDate();
+        const month = new Date(_p.DateApproved.substring(0, 10)).getMonth();
+
+        return `${months[month]} ${day}, ${year}`;
+    } else {
+        return false;
+    }
+}
+function checkLoanDateClosed(_p){
+    const year = new Date(_p.DateClosed.substring(0, 10)).getFullYear();
+
+    if (year == filter_util.date_closed || filter_util.date_closed == ""){
+        return true;
+    } else {
+        return false;
+    }
+}
+function checkLoanType(_p){
+    if (_p.LoanType == filter_util.loan_type || filter_util.loan_type == ""){
+        return true;
+    } else {
+        return false;
+    }
+}
+function checkRetainedJobs(_p){
+    var rj = parseInt(_p.ProjectedRetainedJobs);
+
+    if (filter_util.retained_jobs == 1){
+        if (rj > 0 && rj < 26){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.retained_jobs == 2){
+        if (rj > 24 && rj < 101){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.retained_jobs == 3){
+        if (rj > 100){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.retained_jobs == ""){
+        return true;
+    } else {
+        return false;
+    }
+}
+function checkNewJobs(_p){
+    var nj = parseInt(_p.ProjectedNewJobs);
+
+    if (filter_util.new_jobs == 1){
+        if (nj > 0 && nj < 26){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.new_jobs == 2){
+        if (nj > 24 && nj < 101){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.new_jobs == 3){
+        if (nj > 100){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.new_jobs == ""){
+        return true;
+    } else {
+        return false;
+    }
+}
+function checkCountyDistrict(_p){
+    return _p.CountyCommissionDistrict.includes(filter_util.county_district);
+}
+function checkCityDistrict(_p){
+    return _p.CityCouncilDistrict.includes(filter_util.city_district);
+}
+function checkLoanAmount(_p){
+    var p_total = parseInt(_p.LoanAmount);
+    if (filter_util.loan_amount == 1){
+        if (p_total > 0 && p_total < 1000001){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.loan_amount == 2){
+        if (p_total > 1000000 && p_total < 10000001){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.loan_amount == 3){
+        if (p_total > 10000000 && p_total < 30000001){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.loan_amount == 4){
+        if (p_total > 30000000 && p_total < 75000001){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.loan_amount == 5){
+        if (p_total > 75000000){
+            return true;
+        } else {
+            return false;
+        }
+    } else if (filter_util.loan_amount == ""){
+        return true;
+    } else {
+        return false;
+    }
+}
+function checkZipcode(_p){
+    if (filter_util.zipcode == ""){
+        return true;
+    } else {
+        if (_p.ZipCode.includes(filter_util.zipcode)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+sortLoanList();
+$('#date-approved-selection').change(() => sortLoanList());
+$('#date-closed-selection').change(() => sortLoanList());
+$('#loan-type-selection').change(() => sortLoanList());
+$('#retained-jobs-selection').change(() => sortLoanList());
+$('#new-jobs-selection').change(() => sortLoanList());
+$('#county-district-selection').change(() => sortLoanList());
+$('#city-district-selection').change(() => sortLoanList());
+$('#loan-amount-selection').change(() => sortLoanList());
+$('#zipcode-input').keyup(() => sortLoanList());
+
+$("#filter-tab").click(function(){
+    var t = $(this).find('span');
+    console.log();
+    if ( t.html().trim() == "arrow_right" ) {
+        $(this).find('span').html('arrow_left');
+        $("#filter-selection-list").animate(
+            { right: "+=300" }, 400, function() {
+            // Animation complete.
+        });
+        $( this ).animate(
+            { right: "+=0", top: "-=0" },
+            {
+                step: () => {
+                    $('#filter-selection-list').css('box-shadow', '5px 5px 5px rgba(0,0,0,.25)');
+                }
+            }, 200, function() {
+            // Animation complete.
+        });
+    } else if ( t.html().trim() == "arrow_left" ) {
+        $(this).find('span').html('arrow_right');
+        $("#filter-selection-list").animate(
+            { right: "-=300" }, 400, function() {
+            // Animation complete.
+        });
+        $( this ).animate(
+            { right: "-=0", top: "+=0" },
+            {
+                step: () => {
+                    $('#filter-selection-list').css('box-shadow', '5px 5px 5px rgba(0,0,0,0)');
+                }
+            }, 200, function() {
+            // Animation complete.
+        });
+    }
+});
+
+$(window).scroll(function(){
+  if ($(window).scrollTop() > ($("#filter-tab").position().top - 100)){
+    $("#filter-tab").css("position","fixed");
+    $("#filter-selection-list").css("position","fixed");
+    $("#filter-tab").css("top","30px");
+    $("#filter-selection-list").css("top","50px");
+  } else {
+    $("#filter-tab").css("position","absolute");
+    $("#filter-selection-list").css("position","absolute");
+    $("#filter-tab").css("top","580px");
+    $("#filter-selection-list").css("top","600px");
+  }
+
+  if ($(window).scrollTop() < 550) {
+    $("#filter-tab").css("position","absolute");
+    $("#filter-selection-list").css("position","absolute");
+    $("#filter-tab").css("top","580px");
+    $("#filter-selection-list").css("top","600px");
+  }
+});
+</script>

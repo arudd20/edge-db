@@ -1,0 +1,76 @@
+<style>
+    .footer-bridge {
+        background: url('{{repeat_ftr_bg_url}}');
+        background-repeat: repeat-x;
+        background-position: bottom;
+    }
+    .footer-content {
+        background-color: #232325;
+        color: rgba(220,220,220,1);
+        
+    }
+    .footer-content > div {
+        max-width: 1024px;
+        margin: 0px auto;
+    }
+
+    .mb-neg{
+        margin-bottom: -2.5rem;
+    }
+
+    .material-icons {
+        font-size: 1.25rem;
+    }
+</style>
+{% include  "menu-footer.twig" with {'items': menuFooter.get_items} %}
+<footer class="text-white ovrflw-hdn">
+    {# <div class="edge-bg-red w-full py-20 grid grid-cols-12 ml-64 px-12 diag mb-neg">
+        <div class="col-span-5 flex flex-row gap-6">
+            <div class="diag bg-white px-1">I</div>
+            <div class="">
+                <div class="text-sm letter-wider">ECONOMIC GROWTH UPDATES</div>
+                <div class="text-2xl">Join The Cutting EDGE</div>
+            </div> 
+        </div>
+        <div class="col-span-7">
+            <div class="w-1/2">
+                <div class="text-sm">Sign up for updates:</div>
+                <div class="w-full py-2">
+                    <input type="text" placeholder="Email" class="w-full p-2">
+                </div>
+                <div class="flex justify-end">
+                    <button class="edge-btn-white px-12 py-2">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div> #}
+    <div class="footer-content pb-10 pt-16">
+        <div class="grid grid-cols-2 gap-6">
+            <div class="col-span-1"><img src="{{custom_logo_url}}" alt="{{site.name}}" /></div>
+            <div class="col-span-1 flex flex-col items-end">
+                <div class="text-xl">Have a question?</div>
+                <a id="contact-us" href="" class="flex items-center">
+                    <div class="uppercase text-xs mt-1 letter-wider ">Contact Us </div>
+                    <span class="material-icons edge-red">chevron_right</span>
+                </a>
+            </div>
+            <div class="col-span-1">
+                @2022 | <a>Privacy Policy</a> | <a>Accessibility</a>
+            </div>
+            <div class="col-span-1 text-right">
+                <div class="flex flex-row gap-4 justify-end">
+                    <div><a class="fa fa-facebook"></a></div>
+                    <div><a class="fa fa-linkedin"></a></div>
+                    <div><a class="fa fa-twitter"></a></div>
+                    <div><a class="fa fa-youtube"></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    $(document).ready(function(){
+        $('#contact-us').attr('href', MAIN_SITE_URL + '/contact');
+    });
+</script>

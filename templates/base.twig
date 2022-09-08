@@ -1,0 +1,99 @@
+
+{% block html_head_container %}
+	{% include 'html-header.twig' %}
+	{% block head %}
+	{% endblock %}
+	{% include 'data-objects.twig' %}
+	</head>
+{% endblock %}
+
+	<body class="{{body_class}}" data-template="base.twig">
+
+		<a class="skip-link screen-reader-text" href="#content">{{ _e( 'Skip to content') }}</a>
+		
+		<div>
+			<div class="top-nav-parent p-3">
+				<div id="top-nav" class="edge-wrapper flex justify-end gap-4">
+					{% for items in {'items': menuTopNav.get_items} %}
+						{% for item in items %}
+								<a class="py-2 px-4 diag">
+									<div class="text-xs uppercase">{{item}}</div>
+								</a>
+						{% endfor %}
+					{% endfor %}
+				</div>
+			</div>
+			
+			<header class="header" >
+				{% block header %}
+					<div class="wrapper edge-bg-lite px-6">
+						<div class="desktop edge-wrapper flex flex-row justify-between gap-6 ">
+							<h1 class="hdr-logo bg-white pt-8 pr-24 pb-2 diag" role="banner">
+								<a class="hdr-logo-link" href="{{site.url}}" rel="home">
+								{% if custom_logo_url %}
+									<img src="{{custom_logo_url}}" alt="{{site.name}}" />
+								{% else %}
+									{{site.name}}
+								{% endif %}
+								</a>
+							</h1>
+							<nav id="nav-main" class="nav-main pb-2" role="navigation">
+								{% include "menu.twig" with {'items': menuPrimary.get_items} %}
+							</nav><!-- #nav -->
+						</div>
+						<div class="mobile edge-wrapper grid grid-cols-2 items-center py-4">
+							<a class="col-span-1" href="{{site.url}}" rel="home">
+								{% if custom_logo_url %}
+									<img src="https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/edge-project-database-logo.png" alt="{{site.name}}" />
+								{% else %}
+									{{site.name}}
+								{% endif %}
+							</a>
+							<div class="mobile-menu-button col-span-1 flex justify-end ">
+								<span class="material-icons cursor-pointer"> menu </span>
+							</div>
+							{% include "menu.twig" with {'items': menuPrimary.get_items} %}
+						</div>
+					</div>
+				{% endblock %}
+			</header>
+			
+			<section id="content" role="main" class="w-full">
+
+				<div class="">
+				{% if title %}<h1>{{title}}</h1>{% endif %}
+				</div>
+
+				<div class="wrapper {{sidebar_class}}">
+					{% block content %}
+						Sorry, no content
+					{% endblock %}
+				</div>
+				{% if sidebar %}
+					<aside class="layout-sidebar">
+						{{sidebar}}
+					</aside>
+				{% endif %}
+			</section>
+
+			{% block footer %}
+				<footer id="footer" class="">
+					{% include 'footer.twig' %}
+				</footer>
+				{{ function('wp_footer') }}
+			{% endblock %}
+		</div>
+
+			<script>
+				$(document).ready(function() {
+					$('.mobile-menu-button').click(function() {
+						$('.mobile-menu').show();
+						$('.mobile-menu').css('display', 'flex');
+					});
+					$('.close-mobile').click(function() {
+						$('.mobile-menu').hide();
+					});
+				});
+			</script>
+	</body>
+</html>

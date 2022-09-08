@@ -1,0 +1,101 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<div class="w-full edge-listing-bg">
+    <div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+        <div class="flex flex-col justify-end pr-16">
+            <div class="flex gap-6 edge-max-w-500">
+                <div class="edge-bg-red diag px-6"></div>
+                <div class="text-7xl bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+            </div>
+            <div class="flex gap-6 mt-4 justify-end">
+				<div class="">
+					<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+				</div>
+				<div>
+					<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="edge-bg-dark py-6 w-1/2 left-offset diag flex justify-end">
+	<div class="uppercase mx-auto pr-24 flex items-center gap-2">
+		<span class="material-icons text-white">chevron_left</span>
+		<a id="back-link" href="" class="text-xs text-white lato letter-wider">Back To TIF Projects</a>
+	</div>
+</div>
+
+<div id="edge_tifs" class="">
+	Loading...
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#back-link').attr('href', document.referrer);
+	});
+
+	var _t_id = {{params}}[2];
+	if (_t_id == "tif") { _t_id = {{params}}[3] }
+	const tif = tifs.find(t => t.Id === _t_id);
+
+	var Address = '';
+	if (tif.Address) { Address += tif.Address; }
+	if (tif.Address2) { Address += ', ' + tif.Address2; }
+	if (tif.City) { Address += '<br>' + tif.City; }
+	if (tif.State) { Address += ', ' + tif.State; }
+	if (tif.ZipCode) { Address += ' ' + tif.ZipCode; }
+
+	html = '';
+
+	html += `<div class="grid grid-cols-12 edge-wrapper">
+		<div class="col-span-12">
+			<h1 class="mt-8 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>${tif.CompanyName}</div>
+			<h1>
+			<div class="w-2/3 text-base lato letter-wider mb-8">
+				${Address}
+			</div>
+			<div class="listing-data-left grid grid-cols-12">
+				<div class="font-bold col-span-7">Approved:</div>
+				<div class="col-span-5">${tif.DateApproved}</div>
+				<div class="font-bold col-span-7">TIF Amount:</div>
+				<div class="col-span-5">${formatter.format(tif.TIFAmount)}</div>
+				<div class="font-bold col-span-7">Projected Total Jobs:</div>
+				<div class="col-span-5">${tif.ProjectedTotalJobs}</div>
+				<div class="font-bold col-span-7">Projected MWBE Spending:</div>
+				<div class="col-span-5">${formatter.format(tif.ProjectedMWBESpending)}</div>
+			</div>
+			<div class="diag mt-6">
+				<a class="edge-btn-red py-3 px-8 text-xs text-white">View Project Documents</a>
+			</div>
+		</div>
+	</div>`;
+
+	html += `<div class="edge-bg-mid relative pb-12">
+		<svg height="500" class="w-full absolute zi-10">
+			<polygon points="0,0 0,300 1920,150 1920,0" style="fill:white;stroke:white;stroke-width:1" />	
+		</svg>
+		<div class="edge-wrapper relative zi-20 pb-24">
+			<h1 class="mt-16 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>Project Summary</div>
+			<h1>
+
+			<div class="w-10/12 mx-auto p-12 bg-white shadow-lg">
+				${tif.Summary}
+			</div>
+		</div>
+	</div>`;
+
+	$(document).ready(function() {
+		$('#edge_tifs').html(html);
+		$('#menu-3').css('color', '#BF021C');
+	});
+
+</script>
+	
+{% endblock %}

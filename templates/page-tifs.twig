@@ -1,0 +1,106 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<style>
+    #tif_list > div > div {
+        padding: 1rem;
+    }
+    #total_results > div > div {
+        padding: .25rem;
+    }
+</style>
+
+<div class="w-full edge-tifs-bg">
+    <div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+        <div class="flex flex-col justify-end pr-16">
+            <div class="flex gap-6 edge-max-w-500">
+                <div class="edge-bg-red diag px-6"></div>
+                <div class="search-header bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+            </div>
+            <div class="flex gap-6 mt-4 justify-end">
+				<div class="">
+					<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+				</div>
+				<div>
+					<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="edge-bg-lite py-8">
+    <div class="edge-wrapper">
+        <h1 class="flex gap-6 flex items-center sm-hdr">
+            <div class="px-2 py-8 edge-bg-red diag"></div>
+            <div>TIF Data</div>
+        <h1>
+    </div>
+</div>
+
+<div id="edge_tifs" class="">
+    Loading...
+</div>
+
+<div class="edge-wrapper mt-24">
+    <h1 class="my-8 flex gap-6 flex items-center sm-hdr">
+        <div class="px-2 py-8 edge-bg-red diag"></div>
+        <div>TIF Program<br>Impact</div>
+    <h1>
+</div>
+
+<div id="total_results" class="edge-wrapper flex flex-col mb-24">
+    Loading...
+</div>
+
+<script>
+    const URL = SITE_URL + '/tifs/tif/';
+
+    const total_jobs = tifs.map(function (t) {
+        return parseInt(t.ProjectedTotalJobs);
+    });
+
+    const total_capital_investment = tifs.map(function (t) {
+        return parseInt(t.TotalInvestment);
+    });
+
+    const total_number_of_tifs = tifs.length;
+
+    const total_amount_of_tifs = tifs.map(function (t) {
+        return parseInt(t.TIFAmount);
+    });
+
+    html = `
+        <div class="grid grid-cols-12 font-bold text-base text-center">
+            <div class="col-span-2">Total Jobs</div>
+            <div class="col-span-4">Total Capital Investment</div>
+            <div class="col-span-3">Total Number of TIFs</div>
+            <div class="col-span-3">Total Amount of TIFs</div>
+        </div>
+        <div class="grid grid-cols-12 text-center">
+            <div class="col-span-2">
+                ${total_jobs.reduce((a, b) => a + b)}
+            </div>
+            <div class="col-span-4">
+                ${formatter.format(total_capital_investment.reduce((a, b) => a + b))}
+            </div>
+            <div class="col-span-3">
+                ${total_number_of_tifs}
+            </div>
+            <div class="col-span-3">
+                ${formatter.format(total_amount_of_tifs.reduce((a, b) => a + b))}
+            </div>
+        </div>`;
+
+    document.getElementById('total_results').innerHTML = html;
+
+    $(document).ready(function() {
+        $('#menu-3').css('color', '#BF021C');
+    });
+
+</script>
+
+{% include 'tif-filter.twig' %}
+
+{% endblock %}

@@ -1,0 +1,327 @@
+<!doctype html>
+<!--[if lt IE 9]><html class="no-js no-svg ie lt-ie9 lt-ie8 lt-ie7" {{ site.language_attributes }}> <![endif]-->
+<!--[if IE 9]><html class="no-js no-svg ie ie9 lt-ie9 lt-ie8" {{ site.language_attributes }}> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js no-svg" {{ site.language_attributes }}> <!--<![endif]-->
+<head>
+    <meta charset="{{ site.charset }}" />
+    <meta name="description" content="{{ site.description }}">
+    <link rel="stylesheet" href="{{ site.theme.link }}/style.css" type="text/css" media="screen" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="author" href="{{ site.theme.link }}/humans.txt" />
+    <link rel="pingback" href="{{ site.pingback_url }}" />
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+
+    {# Google Fonts #}
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+	{# Font-Awesome Icons #}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Import jQuery, AlpineJS Micro Framework & Tailwind CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {# Custom CSS and Scripts - Global #}
+    <style>
+	{# Global Styles #}
+		{# Fonts #}
+		.bebas { font-family: 'Bebas Neue', sans-serif; }
+		.lato { font-family: 'Lato', sans-serif; }
+
+		{# Standard Custom Utilities #}
+		.uppercase { text-transform: uppercase; }
+		.bg-repeat-y { background-repeat: repeat-y; }
+		.bg-repeat-x { background-repeat: repeat-x; }
+		.bg-no-repeat { background-repeat: no-repeat;}
+		.border-none { border: none; }
+		.letter-wider {letter-spacing: 2px;}
+
+		{# EDGE Custom Colors #}
+		.edge-red { color: #BF021C; }
+		.edge-red-dark { color: #6E0708; }
+
+		.edge-wt80-border-top > div {
+			border-top: 1px solid rgba(255,255,255,.8);
+			padding-left: 1rem;
+		}
+
+		.zi-10 { z-index: 10; }
+		.zi-20 { z-index: 20; }
+
+		.edge-bk80-border-top > div {
+			border-top: 1px solid rgba(0,0,0,.8);
+			padding-left: .5rem;
+		}
+
+		.edge-mid { color: #CECECE; }
+		.edge-lite { color: #EBEBEB; }
+		.edge-dark { color: #3A3B3D; }
+		.edge-bg-mid { background-color: #CECECE; }
+		.edge-bg-lite { background-color: #F4F4F4; }
+		.edge-bg-dark { background-color: #3A3B3D; }
+
+        .edge-bg-red, .edge-btn-red { background-color: #BF021C; }
+		.edge-bg-red-dark { background-color: #6E0708; }
+
+		.edge-btn-red:hover { background-color: rgba(191,2,28,0.8); }
+		.edge-btn-white { background-color: rgba(255,255,255,1); color: #232323; }
+		.edge-btn-white:hover { background-color: rgba(230,230,230,1); }
+
+		.edge-link-red { color: #BF021C; }
+		.edge-link-red:hover { color: rgba(153,153,153,1); }
+		.edge-link-gray { color: rgba(204,204,204,1); }
+		.edge-link-gray:hover { color: rgba(153,153,153,1); }
+
+		{# EDGE Misc #}
+		.edge-home-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/scorecard-header.jpg');
+			background-size: auto 55vw;
+			background-position: 130% 100%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-pilots-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/PILOT-header.jpg');
+			background-size: auto 55vw;
+			background-position: 150% 70%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-tifs-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/tifs-header.jpg');
+			background-size: auto 55vw;
+			background-position: 120% 30%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-loans-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/loans-header.jpg');
+			background-size: auto 50vw;
+			background-position: 100% 50%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-bonds-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/bonds-header.jpg');
+			background-size: auto 50vw;
+			background-position: 100% 10%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-others-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/others-header.jpg');
+			background-size: auto 55vw;
+			background-position: 130% 50%;
+			background-repeat: no-repeat;
+		}
+
+		.edge-listing-bg {
+			background-image: url('https://edgedata.saucebuild.com/wp/wp-content/uploads/2022/07/project-details-headers.jpg');
+			background-size: auto 55vw;
+			background-position: 100% 0%;
+			background-repeat: no-repeat;
+		}
+
+		{# EDGE Custom Utilities #}
+		.edge-wrapper { max-width: 1024px; margin: 0px auto; padding: 0px; }
+		.edge-max-w-500 { max-width: 500px; }
+		
+		.hdr-logo {
+			padding-left: 600px;
+			margin-left: -600px;
+		}
+
+		.left-offset {
+			margin-left: -50px;
+		}
+
+		.hdr-logo-link > img {
+			max-width: 250px;
+			transform: skewX(11deg);
+		}
+
+        .diag {
+            transform: skewX(-11deg);
+        }
+		.diag > * {
+            transform: skewX(11deg);
+        }
+
+		.w-100vw {
+			width: 100vw;
+		}
+
+		.ovrflw-hdn {
+			overflow-x: hidden;
+		}
+
+		.min-h-500 {
+			min-height: 575px;
+		}
+
+        
+
+		#top-nav, .top-nav-parent {
+			background-color: #6E0708;
+		}
+
+        #top-nav > a {
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+         #top-nav > a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+		.listing-data-left > * {
+			margin-bottom: 2.5rem;
+		}
+
+		{# //////////////////////// #}
+
+		body {
+			font-family: 'Lato', sans-serif;
+			font-size: 16px;
+			line-height: 28.8px;
+			color: black;
+		}
+
+		.lg-hdr {
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 87.62px;
+			line-height: 87.62px;
+			color: black;
+		}
+
+		.sm-hdr {
+			font-family: 'Lato', sans-serif;
+			font-size: 35px;
+			font-weight: 700;
+			line-height: 42px;
+			color: black;
+		}
+
+		.search-header {
+			font-size: 4.5rem;
+			line-height: 1;
+		}
+
+		.header > .wrapper > .mobile {
+			display: none;
+		}
+
+		.row-b1 {
+			border-bottom: 1px solid #ccc;
+		}
+
+		{# //////// Responsive #}
+
+		@media only screen and (max-width: 1115px) and (min-width: 768px) {
+			.left-offset {
+				margin-left: 0px;
+			}
+			.search-header {
+				font-size: 3rem;
+				line-height: 1;
+			}
+			.edge-max-w-500 {
+				max-width: 375px;
+			}
+		}
+		@media only screen and (max-width: 485px) {
+			.header > .wrapper > .desktop {
+				display: none;
+			}
+			.header > .wrapper > .mobile {
+				display: grid;
+			}
+			.header > .wrapper > .mobile > div > span {
+				display: grid;
+				font-size: 2.5rem;
+			}
+			#menu.burger > li > span {
+				display: none;
+			}
+		}
+
+		.top-nav-parent {
+			display: none;
+			
+		}
+
+		@media only screen and (min-width: 750px) {
+			.top-nav-parent {
+				display: grid;
+			}
+		}
+	}
+		
+	</style>
+
+	<script>
+		// Global JS var tools
+////////////////////////////////////////////////////////////////////////////////////////////////
+		// to use: formatter.format(number);
+		var formatter = new Intl.NumberFormat('en-US', {
+			style: 'currency',
+			currency: 'USD',
+		});
+
+		const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+		const pilots = {{edge_pilot_program}};
+		const tifs = {{edge_tifs}};
+		const others = {{edge_others}};
+		const bonds = {{edge_bonds}};
+		const loans = {{edge_loan_program}};
+
+		const MAIN_SITE_URL = 'https://edge.saucebuild.com/wp';
+		const SITE_URL = '{{ site.url }}';	
+
+		console.log({{edge_bonds}});
+		console.log({{edge_tifs}});
+		console.log({{edge_others}});
+		console.log({{edge_loan_program}}); 
+		console.log({{edge_pilot_program}});
+
+		// Filter By:
+		// Projected New Jobs: Low - High
+		// Projected Retained Jobs: Low - High
+		// Projected Total Jobs: Low - High
+		// Projected MWBE/LOSB Spending: Low - High
+		// Average Payroll of Projected New Jobs: Low - High
+		// Average Payroll of Retained Jobs: Low - High
+		// Projected Investment: Low - High
+		// Projected Investment(Real Property): Low - High
+		// Projected Investment(Personal Property): Low - High
+		// Pilot Type: Dropdowm
+		// Year Approved: Dropdown
+		// Project Industry Classification: Dropdown
+
+		// For Pilots Specifically.
+		// Date Approved: Date Range
+		// Date Closed: Date Range
+		// Project Type: Dropdown
+		// Industry Classification: Dropdown
+		// Project Status: Dropdown
+		// County Commission District: Dropdown
+		// City Council District: Dropdown
+		// Benefit Cost Ratio: Low - High
+		// Address: Text Fields?
+		// Amended?: Chackbox
+		// Total Investment For Items shown, as well as jobs and total MWBE spending
+				function filterList(data_list){
+
+		}
+	</script>
+    {{function('wp_head')}}

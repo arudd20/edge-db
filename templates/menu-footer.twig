@@ -1,0 +1,24 @@
+{% if menuFooter %}
+{# <style>
+		.menu-footer-bg { background: rgba(70,70,70,1) }
+		#menu-footer > li > a {
+			color: rgba(255,255,255,1);
+		}
+		
+		#menu-footer > li > a:hover {
+			color: rgba(138,31,3,1);
+		}
+</style>
+<div class="menu-footer-bg py-2 bebas text-xl">
+	<ul id="menu-footer" class="w-7/12 mx-auto flex flex-row edge-wrapper justify-between gap-6">
+	{% for item in items %}
+		<li class="{{ item.classes | join(' ') }}">
+			<a target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+			{% if item.children %}
+				{% include "menu.twig" with {'items': item.children} %}
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+</div> #}
+{% endif %}

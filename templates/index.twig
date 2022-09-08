@@ -1,0 +1,45 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	{# <h2>{{ foo }}</h2>
+	<p>{{ qux }}</p>
+	{% for post in posts %}
+		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+	{% endfor %}
+	
+	{% include 'partial/pagination.twig' with { pagination: posts.pagination({show_all: false, mid_size: 3, end_size: 2}) } %} #}
+
+	<div class="w-full edge-home-bg">
+		<div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+			<div class="flex flex-col justify-end pr-16">
+				<div class="flex gap-6 edge-max-w-500">
+					<div class="edge-bg-red diag px-6"></div>
+					<div class="search-header bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+				</div>
+				<div class="flex gap-6 mt-4 justify-end">
+					<div class="">
+						<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+					</div>
+					<div>
+						<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="py-8 edge-wrapper">
+		{% include 'index-ep-scorecard.twig' %}
+	</div>
+
+	{# <div class="py-8 bg-gray-300">
+		{% include 'index-search.twig' %}
+	</div> #}
+
+	<script>
+		$(document).ready(function() {
+			$('#menu-1').css('color', '#BF021C');
+		});
+	</script>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% if menuPrimary %}
+
+<style>
+	#menu { color: rgba(35,35,35,1); }
+	#menu > li > a:hover { color: rgba(153,153,153,1); }
+	#menu.burger > li > span {
+		font-size: 2.5em;
+		cursor: pointer;
+	}
+	#menu.burger > li > span:hover {
+		color: #BF021C;
+	}
+	#menu.small {
+		display: none;
+	}
+	#menu.burger {
+		display: none;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		#nav-main {}
+		#menu.large {
+			display: none;
+		}
+		#menu.burger {
+			display: block;
+		}
+		.mobile-menu {
+			display: flex;
+			z-index: 100;
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(255,255,255,0.9);
+		}
+		.mobile-menu > li > a {
+			padding: 1rem;
+			font-size: 1.5em;
+		}
+	}
+
+	
+</style>
+	<ul id="menu" class="large w-full h-full flex flex-row items-end text-lg gap-8">
+	{% for item in items %}
+		<li class="{{ item.classes | join(' ') }}">
+			<a id="menu-{{loop.index}}" target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+			{% if item.children %}
+				{% include "menu.twig" with {'items': item.children} %}
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+
+	<ul id="menu" class="burger w-full h-full text-lg gap-8">
+		<li class="mt-4 mobile-menu-button"><span class="material-icons"> menu </span></li>
+	</ul>
+
+	<ul id="menu" class="small mobile-menu w-full h-full flex flex-col items-end text-lg gap-8 p-8">
+	<li class="close-mobile p-4 cursor-pointer font-bold text-3xl">X</li>
+	{% for item in items %}
+		<li class="{{ item.classes | join(' ') }}">
+			<a id="menu-{{loop.index}}" target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+			{% if item.children %}
+				{% include "menu.twig" with {'items': item.children} %}
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+
+
+	
+{% endif %}

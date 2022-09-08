@@ -1,0 +1,137 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<style>
+    #pilot_list > div > div {
+        padding: 1rem;
+    }
+    #total_results > div > div > div {
+        padding: .25rem;
+    }
+</style>
+
+<div class="w-full edge-pilots-bg">
+    <div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+        <div class="flex flex-col justify-end pr-16">
+            <div class="flex gap-6 edge-max-w-500">
+                <div class="edge-bg-red diag px-6"></div>
+                <div class="search-header bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+            </div>
+            <div class="flex gap-6 mt-4 justify-end">
+				<div class="">
+					<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+				</div>
+				<div>
+					<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="edge-bg-lite py-8">
+    <div class="edge-wrapper">
+
+        <h1 class="flex gap-6 flex items-center sm-hdr">
+            <div class="px-2 py-8 edge-bg-red diag"></div>
+            <div>PILOT Data</div>
+        <h1>
+    </div>
+</div>
+
+<div id="edge_pilots" class="">
+    Loading...
+</div>
+
+<div class="edge-wrapper mt-24">
+    <h1 class="my-8 flex gap-6 flex items-center sm-hdr">
+        <div class="px-2 py-8 edge-bg-red diag"></div>
+        <div>PILOT Program<br>Impact</div>
+    <h1>
+</div>
+
+<div id="total_results" class="edge-wrapper flex flex-col gap-8 mb-24">
+    Loading...
+</div>
+
+<script>
+    const URL = SITE_URL + '/pilots/pilot/';
+
+    const total_jobs = pilots.map(function (p) {
+        return parseInt(p.TotalJobs);
+    });
+
+    const total_capital_investment = pilots.map(function (p) {
+        return parseInt(p.ProjectedCapitalInvestment);
+    });
+
+    const total_projected_spending = pilots.map(function (p) {
+        return parseInt(p.MWBE_LOSBSpendingConstruction) + parseInt(p.MWBE_LOSBSpendingOperations);
+    });
+
+    const avg_wage_per_job = pilots.map(function (p) {
+        return parseInt(p.WagesDirect) + parseInt(p.WagesIndirect);
+    });
+
+    const total_projected_tax_revenue = pilots.map(function (p) {
+        return parseInt(p.TotalNewTaxRevenues);
+    });
+
+    const total_projected_tax_abated = pilots.map(function (p) {
+        return parseInt(p.ProjectedTaxesAbatedCity) + parseInt(p.ProjectedTaxesAbatedCounty);
+    });
+
+    const total_number_of_pilots = pilots.length;
+
+    html = `<div class="text-center">
+        <div class="grid grid-cols-12 font-bold text-base">
+            <div class="col-span-2">Total Jobs</div>
+            <div class="col-span-3">Total Capital Investment</div>
+            <div class="col-span-4">Total Projected MWBE/LOSB Spending</div>
+            <div class="col-span-3">Average Wage Per Job</div>
+        </div>
+        <div class="grid grid-cols-12">
+            <div class="col-span-2">
+                ${total_jobs.reduce((a, b) => a + b)}
+            </div>
+            <div class="col-span-3">
+                ${formatter.format(total_capital_investment.reduce((a, b) => a + b))}
+            </div>
+            <div class="col-span-4">
+                ${formatter.format(total_projected_spending.reduce((a, b) => a + b))}
+            </div>
+            <div class="col-span-3">
+                ${formatter.format((avg_wage_per_job.reduce((a, b) => a + b)) / total_number_of_pilots)}
+            </div>
+        </div></div>`;
+
+        html += `<div class="text-center">
+        <div class="grid grid-cols-12 font-bold text-base">
+            <div class="col-span-4">Total Projected Tax Revenue</div>
+            <div class="col-span-4">Total Projected Tax Abated</div>
+            <div class="col-span-4">Total Projected Cost Ratio</div>
+        </div>
+        <div class="grid grid-cols-12">
+            <div class="col-span-4">
+                ${formatter.format(total_projected_tax_revenue.reduce((a, b) => a + b))}
+            </div>
+            <div class="col-span-4">
+                ${formatter.format(total_projected_tax_abated.reduce((a, b) => a + b))}
+            </div>
+            <div class="col-span-4">
+                ${Math.round(100 * (total_projected_tax_revenue.reduce((a, b) => a + b)) / total_projected_tax_abated.reduce((a, b) => a + b)) / 100}
+            </div>
+        </div></div>`;
+
+    document.getElementById('total_results').innerHTML = html;
+
+    $(document).ready(function() {
+        $('#menu-2').css('color', '#BF021C');
+    });
+
+</script>
+
+{% include 'pilot-filter.twig' %}
+
+{% endblock %}

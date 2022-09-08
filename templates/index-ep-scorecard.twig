@@ -1,0 +1,287 @@
+<style>
+
+    #scorecard-data div > ul > li {
+        border-top: 2px solid #C8C8C8;
+    }
+
+
+</style>
+
+<script>
+    const data_lists = [pilots, tifs, loans, bonds, others];
+    
+    var _total_jobs_list = [];
+    var _total_capital_investment_list = [];
+    var _projected_mwbe_losb_spending_list = [];
+    var _projected_benefit_to_cost_ratio_list = [];
+    var _avg_pilot_wage_list = [];
+    var _avg_pilot_term_list = [];
+    var _local_tax_revs_generated_list = [];
+    var _total_tax_abated_list = [];
+    var _benefit_cost_ratio_list = [];
+    var _incentive_per_year_list = [];
+    var _num_of_pilots_approved_list = [];
+    var _num_tifs_approved = 0;
+    var _num_loans_approved = 0;
+    var _total_loan_amount = 0;
+    var _num_bonds_approved = 0;
+    var _total_bond_amount = 0;
+    var _num_others_approved = 0;
+
+
+    var scorecard = new Scorecard();
+
+    data_lists.forEach(function(list) {
+        list.forEach(function(li) {
+            
+
+            var _total_jobs = li.TotalJobs ? li.TotalJobs : li.ProjectedTotalJobs;
+            if (!_total_jobs) { _total_jobs = li.ProjectedNewJobs; }
+
+            var _total_capital_investment = li.ProjectedInvestment ? li.ProjectedInvestment : li.TotalProjectedCapitalInvestment;
+            if (!_total_capital_investment) { _total_capital_investment = li.TotalCapitalInvestment; }
+
+            if (li.PilotStatus == 'Approved') {
+                _num_of_pilots_approved_list.push(1);
+            } else {
+                _num_of_pilots_approved_list.push(0);
+            }
+
+            var _projected_mwbe_losb_spending = 0 ;
+
+            if (li.ProjectedMWBE_LOSBSpending) {
+                _projected_mwbe_losb_spending += parseInt(li.ProjectedMWBE_LOSBSpending);
+            }
+
+            _projected_mwbe_losb_spending_list.push(_projected_mwbe_losb_spending);
+
+            if (parseInt(li.WagesDirect) && parseInt(li.WagesIndirect) && li.PilotTerm){
+ 
+                _avg_pilot_wage_list.push(parseInt(li.WagesDirect) + parseInt(li.WagesIndirect) );
+            }
+
+            if (li.PilotTerm) {
+                var substring = li.PilotTerm;
+                _avg_pilot_term_list.push(parseInt(parseInt(substring.substring(0, 2))));
+            } else {
+            }
+            
+            var _avg_pilot_term = li.PilotTerm;
+
+            if (li.TotalNewTaxRevenues) {
+                _local_tax_revs_generated_list.push(parseInt(li.TotalNewTaxRevenues));
+            }
+
+            
+            if (li.ProjectedTaxesAbatedCity && li.ProjectedTaxesAbatedCounty) {
+                const _ta = parseInt(li.ProjectedTaxesAbatedCity) + parseInt(li.ProjectedTaxesAbatedCounty);
+                _total_tax_abated_list.push(_ta);
+            }
+
+            if (li.BenefitCostRatio) {
+                _benefit_cost_ratio_list.push(parseFloat(li.BenefitCostRatio));
+            }
+
+            if (li.TotalIncentiveProvided) {
+                _incentive_per_year_list.push(parseInt(li.TotalIncentiveProvided));
+            }
+
+            if (li.TIFAmount && li.DateApproved != "0000-00-00"){
+                _num_tifs_approved++;
+            }
+
+            if (li.LoanAmount && li.DateApproved != "0000-00-00"){
+                _total_loan_amount += parseInt(li.LoanAmount);
+                _num_loans_approved++;
+            }
+
+            if (li.BondAmount && li.DateApproved != "0000-00-00"){
+                _total_bond_amount += parseInt(li.BondAmount);
+                _num_bonds_approved++;
+            }
+
+            if (li.FinancingAmount && li.DateApproved != "0000-00-00"){
+                _num_others_approved++;
+            }
+
+            _total_jobs_list.push( parseInt(_total_jobs) );
+            
+            if (_total_capital_investment) {
+                _total_capital_investment_list.push( parseInt(_total_capital_investment) );
+            } else {
+                _total_capital_investment_list.push( 0 );
+            }
+
+        });
+    });
+
+
+    scorecard.total_jobs.value = _total_jobs_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.total_capital_investment.value = _total_capital_investment_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.num_of_pilots_approved.value = _num_of_pilots_approved_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.target_spending.value = _projected_mwbe_losb_spending_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.avg_pilot_term.value = Math.ceil(_avg_pilot_term_list.reduce(function(a, b) {
+        return a + b;
+    })/_avg_pilot_term_list.length);
+
+    var _total_avg_pilot_wage = 0;
+    _avg_pilot_wage_list.forEach(function(wage) {
+        _total_avg_pilot_wage += wage;
+    });
+    scorecard.avg_pilot_wage.value = _total_avg_pilot_wage;
+
+    scorecard.local_tax_rev.value = _local_tax_revs_generated_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.tax_abated.value = _total_tax_abated_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.benefit_cost_ratio.value = (_benefit_cost_ratio_list.reduce(function(a, b) {
+        return a + b;
+    })/_benefit_cost_ratio_list.length).toFixed(2);
+
+    scorecard.incentive_amt.value = _incentive_per_year_list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    scorecard.num_tifs_approved.value = _num_tifs_approved;
+    scorecard.num_loans_approved.value = _num_loans_approved;
+    scorecard.num_bonds_approved.value = _num_bonds_approved;
+    scorecard.num_others_approved.value = _num_others_approved;
+    scorecard.total_loan_amt.value = _total_loan_amount;
+    scorecard.total_bond_amt.value = _total_bond_amount;
+
+    console.log( scorecard );
+
+    var li_html = '';
+    var sc_count = 0;
+    scorecard.list_breakers.forEach((b) => {
+        if (sc_count == b) {
+            li_html += '';
+        }
+        sc_count++;
+    });
+
+    li_html += `
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.total_jobs.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.total_jobs.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.total_capital_investment.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.total_capital_investment.value)}</div>
+    </li>
+
+        <li style="height:.75rem;" class="w-full edge-bg-dark border-none"></li>
+    
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.num_of_pilots_approved.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.num_of_pilots_approved.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.target_spending.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.target_spending.value)}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.avg_pilot_wage.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.avg_pilot_wage.value / scorecard.total_jobs.value)}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.avg_pilot_term.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.avg_pilot_term.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.local_tax_rev.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.local_tax_rev.value)}</div>
+    </li>
+    
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.tax_abated.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.tax_abated.value)}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.benefit_cost_ratio.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.benefit_cost_ratio.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.incentive_amt.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.incentive_amt.value)}</div>
+    </li>
+
+        <li style="height:.75rem;" class="w-full edge-bg-dark"></li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.num_tifs_approved.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.num_tifs_approved.value}</div>
+    </li>
+
+        <li style="height:.75rem;" class="w-full edge-bg-dark"></li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.num_loans_approved.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.num_loans_approved.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.total_loan_amt.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.total_loan_amt.value)}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.num_bonds_approved.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.num_bonds_approved.value}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.total_bond_amt.text}</div>
+        <div class=" col-span-3 p-3">${formatter.format(scorecard.total_bond_amt.value)}</div>
+    </li>
+
+    <li class="w-full grid grid-cols-12  uppercase">
+        <div class=" col-span-9 p-3 font-semibold">${scorecard.num_others_approved.text}</div>
+        <div class=" col-span-3 p-3">${scorecard.num_others_approved.value}</div>
+    </li>
+    `;
+
+
+    var scorecard_html = `<div class="w-full"> <ul class="w-full flex flex-col "> ${li_html} </ul> </div>`;
+
+    $(document).ready(() => {
+        $('#scorecard-data').html(scorecard_html);
+    });
+
+</script>
+
+<h1 class="mt-12 flex gap-6 mb-6 sm-hdr">
+    <div class="px-2 edge-bg-red diag"></div>
+    <div>Projects<br>Scorecard</div>
+<h1>
+
+<div id="scorecard-data">
+    Loading...
+</div>
+
+<div class="text-sm py-2">
+    *APPLIES TO PILOTS APPROVED PRIOR TO JULY 1, 2017
+</div>

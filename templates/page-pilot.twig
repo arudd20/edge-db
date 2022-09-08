@@ -1,0 +1,296 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<div class="w-full edge-listing-bg">
+    <div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+        <div class="flex flex-col justify-end pr-16">
+            <div class="flex gap-6 edge-max-w-500">
+                <div class="edge-bg-red diag px-6"></div>
+                <div class="text-7xl bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+            </div>
+            <div class="flex gap-6 mt-4 justify-end">
+				<div class="">
+					<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+				</div>
+				<div>
+					<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="edge-bg-dark py-6 w-1/2 left-offset diag flex justify-end">
+	<div class="uppercase mx-auto pr-24 flex items-center gap-2">
+		<span class="material-icons text-white">chevron_left</span>
+			<a id="back-link" href="" class="text-xs text-white lato letter-wider">Back To PILOT Projects</a>
+	</div>
+</div>
+
+<div id="edge_pilots" class="">
+	Loading...
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#back-link').attr('href', document.referrer);
+	});
+
+	var _p_id = {{params}}[2];
+	if (_p_id == "pilot") { _p_id = {{params}}[3] }
+	const pilot = pilots.find(p => p.Id === _p_id);
+
+	console.log({{params}});
+	console.log(_p_id);
+	console.log(pilots);
+	console.log(pilot);
+
+	var Address = '';
+	if (pilot.Address) { Address += pilot.Address; }
+	if (pilot.Address2) { Address += ', ' + pilot.Address2; }
+	if (pilot.City) { Address += '<br>' + pilot.City; }
+	if (pilot.State) { Address += ', ' + pilot.State; }
+	if (pilot.ZipCode) { Address += ' ' + pilot.ZipCode; }
+
+	var LeaseBegins = '';
+	{# if (pilot.LeaseBegins != "0000-00-00") { LeaseBegins = pilot.lease_begins; } #}
+	if (pilot.LeaseBeginsPersonalProperty != "0000-00-00") { LeaseBegins = pilot.LeaseBeginsPersonalProperty; }
+	if (pilot.LeaseBeginsRealProperty != "0000-00-00") { LeaseBegins = pilot.LeaseBeginsRealProperty; }
+
+	var LeaseExpires = '';
+	{# if (pilot.LeaseExpires != "0000-00-00") { LeaseExpires = pilot.LeaseExpires; } #}
+	if (pilot.LeaseExpiresPersonalProperty != "0000-00-00") { LeaseExpires = pilot.LeaseExpiresPersonalProperty; }
+	if (pilot.LeaseExpiresRealProperty != "0000-00-00") { LeaseExpires = pilot.LeaseExpiresRealProperty; }
+
+	var DateClosed = '';
+	if (pilot.DateClosedPersonalProperty != "0000-00-00") { DateClosed = pilot.DateClosedPersonalProperty; }
+	if (pilot.DateClosedRealProperty != "0000-00-00") { DateClosed = pilot.DateClosedRealProperty; }
+
+	var DateAmended = '';
+	if (pilot.DateAmended01 != "0000-00-00") { DateAmended = pilot.DateAmended01; }
+	else {
+		if (pilot.DateAmended02 != "0000-00-00") { date_amended = pilot.DateAmended02; }
+		if (pilot.DateAmended03 != "0000-00-00") { date_amended = pilot.DateAmended03; }
+		if (pilot.DateAmended04 != "0000-00-00") { date_amended = pilot.DateAmended04; }
+		if (pilot.DateAmended05 != "0000-00-00") { date_amended = pilot.DateAmended05; }
+	}
+	if (pilot.DateAmended01 == "0000-00-00" && pilot.DateAmended02 == "0000-00-00" && pilot.DateAmended03 == "0000-00-00" && pilot.DateAmended04 == "0000-00-00" && pilot.DateAmended05 == "0000-00-00") { DateAmended = 'Never Amended'; }
+
+	var ProjectedTaxRevenues = parseInt(pilot.TotalNewTaxRevenues);
+	var ProjectedTaxAbated = parseInt(pilot.ProjectedTaxesAbatedCity) + parseInt(pilot.ProjectedTaxesAbatedCounty);
+
+
+	html = '';
+
+	html += `<div class="grid grid-cols-12 edge-wrapper">
+		<div class="col-span-7">
+			<h1 class="mt-8 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>${pilot.CompanyName}</div>
+			<h1>
+			<div class="w-2/3 text-base lato letter-wider mb-8">
+				${Address}
+			</div>
+			<div class="listing-data-left grid grid-cols-12">
+				<div class="font-bold col-span-7">Project Number:</div>
+				<div class="col-span-5">${pilot.ProjectNumber}</div>
+				<div class="font-bold col-span-7">Pilot Type:</div>
+				<div class="col-span-5">${pilot.PilotType}</div>
+				<div class="font-bold col-span-7">Status:</div>
+				<div class="col-span-5">${pilot.PilotStatus}</div>
+				<div class="font-bold col-span-7">Parcel ID:</div>
+				<div class="col-span-5">123${pilot.ParcelID}45</div>
+				<div class="font-bold col-span-7">City/County District:</div>
+				<div class="col-span-5">${pilot.CityCouncilDistrict}, ${pilot.CountyCommissionDistrict}</div>
+			</div>
+			<div class="diag mt-6">
+				<a class="edge-btn-red py-3 px-8 text-xs text-white">View Project Documents</a>
+			</div>
+		</div>
+		<div class="col-span-5 edge-bg-red relative min-h-500">
+			<svg height="500" class="w-full absolute">
+				<polygon points="430,430 200,0 430,0" style="fill:#6E0708;stroke:#6E0708;stroke-width:1" />
+
+				<polygon points="0,0 0,50 430,0" style="fill:white;stroke:white;stroke-width:1" />
+				
+			</svg>
+			<div class="w-full absolute p-12 text-sm">
+				<div class="text-white mt-8 edge-wt80-border-top">
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Approved</div>
+						<div class="col-span-6">${pilot.DateApproved}</div>
+					</div>
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Ramp Up Period</div>
+						<div class="col-span-6">${pilot.RampUpPeriod} Years</div>
+					</div>
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Closing</div>
+						<div class="col-span-6">${DateClosed}</div>
+					</div>
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Effective</div>
+						<div class="col-span-6">${pilot.DateClosedEffectiveDate}</div>
+					</div>
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Amended</div>
+						<div class="col-span-6">${DateAmended}</div>
+					</div>
+				</div>
+
+				<div class="mt-8 text-white text-2xl">
+					Property Details
+				</div>
+
+				<div class="text-white mt-8 edge-wt80-border-top">
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Lease Began</div>
+						<div class="col-span-6">${LeaseBegins}</div>
+					</div>
+					<div class="w-full py-3 grid grid-cols-12">
+						<div class="col-span-6 font-semibold">Lease Expires</div>
+						<div class="col-span-6">${LeaseExpires}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>`;
+
+	html += `<div class="edge-bg-mid relative pb-12">
+		<svg height="500" class="w-full absolute zi-10">
+			<polygon points="0,0 0,300 1920,150 1920,0" style="fill:white;stroke:white;stroke-width:1" />	
+		</svg>
+		<div class="edge-wrapper relative zi-20">
+			<h1 class="mt-16 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>Project Summary</div>
+			<h1>
+
+			<div class="w-10/12 mx-auto p-12 bg-white shadow-lg">
+				${pilot.ProjectDescription}
+			</div>
+
+			<h1 class="mt-16 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>Project Overview</div>
+			<h1>
+
+			<div>
+				<div class="mb-8 text-lg">PILOT Term: ${pilot.PilotTerm}</div>
+				<div class="grid grid-cols-2 gap-10">
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Cost & Spending</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Benefit/Cost Ratio</div>
+								<div class="col-span-1">${pilot.BenefitCostRatio}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected MWBE/LOSB Spending</div>
+								<div class="col-span-1">${formatter.format(parseInt(pilot.MWBE_LOSBSpendingConstruction) + parseInt(pilot.MWBE_LOSBSpendingOperations))}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Incentive Provided</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalIncentiveProvided)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Compliance Information</div>
+								<div class="col-span-1">None</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Tax Info</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Tax Revenue</div>
+								<div class="col-span-1">${formatter.format(ProjectedTaxRevenues)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Taxes Abated</div>
+								<div class="col-span-1">${formatter.format(ProjectedTaxAbated)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">City Taxes Abated</div>
+								<div class="col-span-1">${formatter.format(pilot.ProjectedTaxesAbatedCity)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">County Taxes Abated</div>
+								<div class="col-span-1">${formatter.format(pilot.ProjectedTaxesAbatedCounty)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Jobs Info</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected New Jobs</div>
+								<div class="col-span-1">${pilot.ProjectedNewJobs}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Retained Jobs</div>
+								<div class="col-span-1">${pilot.ProjectedRetainedJobs}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Total Jobs</div>
+								<div class="col-span-1">${pilot.TotalJobs}</div>
+							</div>
+
+							{# <div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Average Payroll of New Jobs</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalNewPayroll)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Average Payroll of Retained Jobs</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalRetainedPayroll)}</div>
+							</div> #}
+
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Annual New Direct Payroll</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalNewPayroll)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Annual Retained Direct Payroll</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalRetainedPayroll)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Investment</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Total Capital Investment</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalCapitalInvestment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Real Property Investment</div>
+								<div class="col-span-1">${formatter.format(pilot.RealPropertyInvestment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Real Property Investment</div>
+								<div class="col-span-1">${formatter.format(pilot.PersonalPropertyInvestment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Community Reinvestment Credit (CRC)</div>
+								<div class="col-span-1">${formatter.format(pilot.TotalIncentiveProvided)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Capital Investment NOT in PILOT</div>
+								<div class="col-span-1">${formatter.format(pilot.CapitalInvestmentNotInPilot)}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>`;
+
+	$(document).ready(function() {
+		$('#edge_pilots').html(html);
+		$('#menu-2').css('color', '#BF021C');
+	});
+
+</script>
+	
+{% endblock %}

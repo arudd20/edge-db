@@ -1,0 +1,200 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<div class="w-full edge-listing-bg">
+    <div class="left-offset diag bg-white w-7/12 py-20 flex justify-end">
+        <div class="flex flex-col justify-end pr-16">
+            <div class="flex gap-6 edge-max-w-500">
+                <div class="edge-bg-red diag px-6"></div>
+                <div class="text-7xl bebas mt-8">SEARCH THE PROJECT DATABASE</div>
+            </div>
+            <div class="flex gap-6 mt-4 justify-end">
+				<div class="">
+					<input type="text" placeholder="Enter search terms here" class="edge-bg-lite text-sm p-2 diag">
+				</div>
+				<div>
+					<button class="text-sm text-white edge-btn-red py-2 px-12 diag">SEARCH</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="edge-bg-dark py-6 w-1/2 left-offset diag flex justify-end">
+	<div class="uppercase mx-auto pr-24 flex items-center gap-2">
+		<span class="material-icons text-white">chevron_left</span>
+		<a id="back-link" href="" class="text-xs text-white lato letter-wider">Back To Loan Projects</a>
+	</div>
+</div>
+
+<div id="edge_loans" class="">
+	Loading...
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#back-link').attr('href', document.referrer);
+	});
+
+	var _l_id = {{params}}[2];
+	if (_l_id == "loan") { _l_id = {{params}}[3] }
+	const loan = loans.find(l => l.Id === _l_id);
+
+	console.log(loan);
+
+
+	var Address = '';
+	if (loan.Address) { Address += loan.Address; }
+	if (loan.Address2) { Address += ', ' + loan.Address2; }
+	if (loan.City) { Address += '<br>' + loan.City; }
+	if (loan.State) { Address += ', ' + loan.State; }
+	if (loan.ZipCode) { Address += ' ' + loan.ZipCode; }
+
+	html = '';
+
+	html += `<div class="grid grid-cols-12 edge-wrapper">
+		<div class="col-span-12">
+			<h1 class="mt-8 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>${loan.CompanyName}</div>
+			<h1>
+			<div class="w-2/3 text-base lato letter-wider mb-8">
+				${Address}
+			</div>
+			<div class="listing-data-left grid grid-cols-12">
+				<div class="font-bold col-span-7">Project Number:</div>
+				<div class="col-span-5">${loan.ProjectNumber}</div>
+				<div class="font-bold col-span-7">Project Type:</div>
+				<div class="col-span-5">${loan.ProjectType}</div>
+				<div class="font-bold col-span-7">Loan Type:</div>
+				<div class="col-span-5">${loan.LoanType}</div>
+				<div class="font-bold col-span-7">City/County District:</div>
+				<div class="col-span-5">${loan.CityCouncilDistrict}, ${loan.CountyCommissionDistrict}</div>
+			</div>
+			<div class="diag mt-6">
+				<a class="edge-btn-red py-3 px-8 text-xs text-white">View Project Documents</a>
+			</div>
+		</div>
+	</div>`;
+
+	html += `<div class="edge-bg-mid relative pb-12">
+		<svg height="500" class="w-full absolute zi-10">
+			<polygon points="0,0 0,300 1920,150 1920,0" style="fill:white;stroke:white;stroke-width:1" />	
+		</svg>
+		<div class="edge-wrapper relative zi-20">
+			<h1 class="mt-16 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>Project Summary</div>
+			<h1>
+
+			<div class="w-10/12 mx-auto p-12 bg-white shadow-lg">
+				${loan.ProjectDescription}
+			</div>
+
+			<h1 class="mt-16 mb-8 flex gap-6 flex items-center sm-hdr">
+				<div class="px-2 py-8 edge-bg-red diag"></div>
+				<div>Project Overview</div>
+			<h1>
+
+			<div>
+				<div class="mb-8 text-lg">Loan Term: ${loan.Term}</div>
+				
+				<div class="grid grid-cols-2 gap-10">
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Cost & Spending</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Loan Amount</div>
+								<div class="col-span-1">${formatter.format(loan.LoanAmount)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Loan Use</div>
+								<div class="col-span-1">${loan.LoanUse}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Interest Rate</div>
+								<div class="col-span-1">${loan.InterestRate}</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-1 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Jobs Info</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected New Jobs</div>
+								<div class="col-span-1">${loan.ProjectedNewJobs}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Projected Retained Jobs</div>
+								<div class="col-span-1">${loan.ProjectedRetainedJobs}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Average Payroll</div>
+								<div class="col-span-1">${formatter.format(loan.AveragePayroll)}</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-span-2 flex flex-col items-end">
+						<div class="w-10/12 text-lg edge-bg-dark text-white p-6 text-right">Tax Info</div>
+						<div class="w-full h-full p-6 shadow-lg bg-white edge-bk80-border-top">
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Total Projected Capital Investment</div>
+								<div class="col-span-1">${formatter.format(loan.TotalProjectedCapitalInvestment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Real Property</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_RealProperty)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Acquisition</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_Acquisition)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Construction</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_Construction)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Renovation</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_Renovation)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Machinery & Equipment</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_MachineryEquipment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Funiture, Fictures, Office</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_FurnitureFixturesOffice)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Equipment</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_Equipment)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Fees & Soft Costs</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_FeesSoftCosts)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Permanent Working Capital</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_PermanentWorkingCapital)}</div>
+							</div>
+							<div class="grid grid-cols-2 py-4 gap-6">
+								<div class="col-span-1">Miscellaneous</div>
+								<div class="col-span-1">${formatter.format(loan.PCI_Miscellaneous)}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>`;
+
+	$(document).ready(function() {
+		$('#edge_loans').html(html);
+		$('#menu-4').css('color', '#BF021C');
+	});
+
+</script>
+	
+{% endblock %}
